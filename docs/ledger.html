@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANNALS // the burn ledger</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="The Cognition Annals">
+<meta property="og:description" content="A dogbed-compiled field archive of Cognition, Devin, and the SWE model line.">
+<style>.nav a[href="ledger.html"]{color:#02120a;background:#ffb347;border-color:#ffb347;box-shadow:0 0 18px rgba(255,179,71,.45)}</style>
+</head>
+<body>
+<p class="statusbar"><span class="ok">●</span> THE COGNITION ANNALS · <span class="dim">node 07 · uplink secure</span> · channel: <span class="amber">DOGBED</span> · knap → k4o → textile → oliver → html</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="merges.html">MERGED</a></p>
+<p class="kicker">transmission 11 · the operator’s ledger</p>
+<h1>THE BURN LEDGER</h1>
+<p class="lede">Not Cognition’s history — the operator’s. This is the local accounting of one user’s Devin usage: every assistant turn, every model, every project, pulled straight from the sessions database on this machine.</p>
+<h2>THE TOP LINE</h2>
+<table class="statrow">
+<tr>
+<td>6.36B</td>
+<td>61,494</td>
+<td>661</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tokens burned</td>
+<td>assistant turns</td>
+<td>sessions</td>
+<td>days on record</td>
+</tr>
+</table>
+<p>Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way <a href="https://github.com/chris-wozniczek/otter-stats">otter-stats</a> does it. The window is 2026-10-07 to 2026-10-15; the peak was <span class="ok">2026-10-10</span> at <strong>1.43B tokens in a single day</strong>.</p>
+<h2>TOKENS BY MODEL</h2>
+<table class="specs">
+<tr>
+<th>model</th>
+<th>sessions</th>
+<th>turns</th>
+<th>input</th>
+<th>output</th>
+<th>cache read</th>
+<th>cache write</th>
+<th>total</th>
+<th>share</th>
+</tr>
+<tr>
+<td><span class="cyan">swe-2-high</span></td>
+<td>420</td>
+<td>45,418</td>
+<td>201.5M</td>
+<td>28.4M</td>
+<td>4.34B</td>
+<td>0</td>
+<td><strong>4.57B</strong></td>
+<td>71.8% ▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td><span class="cyan">swe-2-max</span></td>
+<td>192</td>
+<td>11,807</td>
+<td>48.5M</td>
+<td>8.5M</td>
+<td>969.8M</td>
+<td>0</td>
+<td><strong>1.03B</strong></td>
+<td>16.1% ▓▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-opus-5-5-high</span></td>
+<td>22</td>
+<td>2,184</td>
+<td>4.6k</td>
+<td>1.8M</td>
+<td>378.3M</td>
+<td>13.9M</td>
+<td><strong>394.0M</strong></td>
+<td>6.2% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-opus-5-5-xhigh</span></td>
+<td>8</td>
+<td>649</td>
+<td>1.4k</td>
+<td>825.4k</td>
+<td>194.7M</td>
+<td>6.1M</td>
+<td><strong>201.6M</strong></td>
+<td>3.2% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-haiku-5-5-high</span></td>
+<td>4</td>
+<td>551</td>
+<td>1.2k</td>
+<td>672.9k</td>
+<td>53.1M</td>
+<td>2.0M</td>
+<td><strong>55.8M</strong></td>
+<td>0.9% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">gemini-4-argon-high</span></td>
+<td>3</td>
+<td>193</td>
+<td>2.1M</td>
+<td>224.2k</td>
+<td>34.8M</td>
+<td>0</td>
+<td><strong>37.1M</strong></td>
+<td>0.6% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">gemini-4-argon-medium</span></td>
+<td>2</td>
+<td>107</td>
+<td>2.0M</td>
+<td>140.5k</td>
+<td>22.0M</td>
+<td>0</td>
+<td><strong>24.1M</strong></td>
+<td>0.4% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">compactor</span></td>
+<td>0</td>
+<td>284</td>
+<td>19.5M</td>
+<td>1.6M</td>
+<td>0</td>
+<td>0</td>
+<td><strong>21.0M</strong></td>
+<td>0.3% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">swe-1-7-medium</span></td>
+<td>2</td>
+<td>169</td>
+<td>352.4k</td>
+<td>129.1k</td>
+<td>19.6M</td>
+<td>0</td>
+<td><strong>20.0M</strong></td>
+<td>0.3% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-opus-5-5-max</span></td>
+<td>0</td>
+<td>12</td>
+<td>28</td>
+<td>17.5k</td>
+<td>6.9M</td>
+<td>636.0k</td>
+<td><strong>7.6M</strong></td>
+<td>0.1% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-opus-5-5-medium</span></td>
+<td>3</td>
+<td>44</td>
+<td>96</td>
+<td>37.3k</td>
+<td>2.4M</td>
+<td>218.9k</td>
+<td><strong>2.7M</strong></td>
+<td>0.0% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-fable-5-1-medium</span></td>
+<td>2</td>
+<td>38</td>
+<td>80</td>
+<td>34.3k</td>
+<td>2.0M</td>
+<td>151.6k</td>
+<td><strong>2.2M</strong></td>
+<td>0.0% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-haiku-5-5-medium</span></td>
+<td>1</td>
+<td>23</td>
+<td>54</td>
+<td>17.1k</td>
+<td>1.5M</td>
+<td>89.2k</td>
+<td><strong>1.6M</strong></td>
+<td>0.0% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">claude-sonnet-5-5-medium</span></td>
+<td>1</td>
+<td>13</td>
+<td>28</td>
+<td>7.6k</td>
+<td>543.9k</td>
+<td>59.0k</td>
+<td><strong>610.5k</strong></td>
+<td>0.0% ▓</td>
+</tr>
+<tr>
+<td><span class="cyan">summarizer</span></td>
+<td>0</td>
+<td>2</td>
+<td>6</td>
+<td>1.4k</td>
+<td>0</td>
+<td>33.7k</td>
+<td><strong>35.2k</strong></td>
+<td>0.0% ▓</td>
+</tr>
+</table>
+<p class="dim-note"><span class="dim">Honest footnote: cache-read dominates the ledger — it is context re-read from the provider’s cache, not fresh reasoning. Of swe-2-high’s 4.57B tokens, 4.34B are cache reads. Output tokens — the part that is actually authored — total 42.3M across all models.</span></p>
+<h2>BURN BY DAY</h2>
+<table class="specs">
+<tr>
+<th>date</th>
+<th>turns</th>
+<th>tokens</th>
+<th>load</th>
+</tr>
+<tr>
+<td>2026-10-07</td>
+<td>2,475</td>
+<td><strong>227.1M</strong></td>
+<td>▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-08</td>
+<td>9,398</td>
+<td><strong>749.6M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-09</td>
+<td>13,119</td>
+<td><strong>1.27B</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-10</td>
+<td>11,405</td>
+<td><strong>1.43B</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-11</td>
+<td>4,560</td>
+<td><strong>434.7M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-12</td>
+<td>5,506</td>
+<td><strong>596.9M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-13</td>
+<td>6,787</td>
+<td><strong>764.0M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-14</td>
+<td>4,173</td>
+<td><strong>467.3M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓▓</td>
+</tr>
+<tr>
+<td>2026-10-15</td>
+<td>4,071</td>
+<td><strong>423.2M</strong></td>
+<td>▓▓▓▓▓▓▓▓▓</td>
+</tr>
+</table>
+<h2>WHERE IT WENT — TOP PROJECTS</h2>
+<table class="specs">
+<tr>
+<th>working directory</th>
+<th>tokens</th>
+<th>share</th>
+</tr>
+<tr>
+<td>VirelaiOS</td>
+<td><strong>722.1M</strong></td>
+<td>11.4%</td>
+</tr>
+<tr>
+<td>boris/t3-fa490763</td>
+<td><strong>324.4M</strong></td>
+<td>5.1%</td>
+</tr>
+<tr>
+<td>filed.fyi/t3-f2b47475</td>
+<td><strong>295.8M</strong></td>
+<td>4.6%</td>
+</tr>
+<tr>
+<td>boris/t3-879a6a39</td>
+<td><strong>192.8M</strong></td>
+<td>3.0%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-2bffb43d</td>
+<td><strong>173.3M</strong></td>
+<td>2.7%</td>
+</tr>
+<tr>
+<td>filed.fyi/t3-04b6a9b6</td>
+<td><strong>158.7M</strong></td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>gostalgia</td>
+<td><strong>157.1M</strong></td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>cookcli/t3-c8e8dad5</td>
+<td><strong>151.2M</strong></td>
+<td>2.4%</td>
+</tr>
+<tr>
+<td>filed.fyi/t3-1fe25d8d</td>
+<td><strong>148.9M</strong></td>
+<td>2.3%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-36e108ec</td>
+<td><strong>145.7M</strong></td>
+<td>2.3%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-m99m-coverage-faces</td>
+<td><strong>127.5M</strong></td>
+<td>2.0%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-e5030172</td>
+<td><strong>123.3M</strong></td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-a39cb3a4</td>
+<td><strong>117.9M</strong></td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td>VirelaiOS/t3-m102f2-acceptance</td>
+<td><strong>107.3M</strong></td>
+<td>1.7%</td>
+</tr>
+<tr>
+<td>gostalgia/t3-6677a4e2</td>
+<td><strong>102.9M</strong></td>
+<td>1.6%</td>
+</tr>
+</table>
+<h2>SESSION MODES</h2>
+<table class="specs">
+<tr>
+<th>mode</th>
+<th>sessions</th>
+</tr>
+<tr>
+<td>accept-edits</td>
+<td>532</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>69</td>
+</tr>
+<tr>
+<td>smart</td>
+<td>58</td>
+</tr>
+<tr>
+<td>(unset)</td>
+<td>2</td>
+</tr>
+</table>
+<blockquote>
+<p>The operator ran <span class="amber">661 sessions</span> in nine days and let the agents keep the receipts. Most of them ran in <span class="cyan">accept-edits</span> mode — trust, but verify the diff.</p>
+</blockquote>
+<p class="dim-note">Source: ~/.local/share/devin/cli/sessions.db, opened read-only, same database otter-stats reads. Token counts are provider-reported per assistant turn; metrics-missing turns (rare) count as zero. Compiled 2026-10-15.</p>
+<p class="endmark">— <span class="dim">END OF TRANSMISSION · CTR-</span>(ok)VERIFIED% —</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="merges.html">MERGED</a></p>
+<p class="ticker">+++ COGNITION ANNALS +++ DEVIN · THE AI SOFTWARE ENGINEER +++ SWE-1 → SWE-1.5 → SWE-1.6 → SWE-1.7 → SWE-2 +++ WINDSURF FOREVER +++ COMPILED BY DOGBED, NOT WRITTEN BY HAND +++ NO JAVASCRIPT WAS HARMED IN THE MAKING OF THIS ARCHIVE +++</p>
+<p class="colophon">rendered by <a href="https://github.com/drawmeanelephant/dogbed">dogbed</a> — a document compiler, not a CMS. one binary, one template, thirteen documents.</p>
+</body>
+</html>

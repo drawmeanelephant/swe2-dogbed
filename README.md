@@ -1,10 +1,10 @@
 # THE COGNITION ANNALS
 
 A standalone showcase site for **dogbed** — the document compiler —
-rendered as an eleven-page "phosphor CRT" museum of Cognition, Devin, and
+rendered as a thirteen-page "phosphor CRT" museum of Cognition, Devin, and
 the SWE model line (SWE-1 through SWE-2).
 
-One `page.knap` template + eleven JSON files → eleven HTML documents.
+One `page.knap` template + thirteen JSON files → thirteen HTML documents.
 One stylesheet. Zero JavaScript.
 
 ## Layout
@@ -15,6 +15,7 @@ src/page.knap  the single shared template (nav, statusbar, ticker, colophon)
 data/*.json    one content file per page — Textile markup inside JSON strings
 docs/          rendered output + style.css + assets
 build.sh       renders every page (temp-file + rename, like upstream docs)
+scripts/regen.py  rebuilds data/ledger.json + merges.json from live sources
 ```
 
 ## Build
@@ -45,6 +46,8 @@ cd docs && python3 -m http.server 8471
 | `swe-17` | harness-native RL inside Devin |
 | `swe-2` | flagship — Kimi K3 base, effort levels |
 | `timeline` | the full 2023→2026 chronology |
+| `ledger` | the operator's burn ledger — tokens by model/day/project |
+| `merges` | every merged Devin PR, scraped from GitHub |
 
 ## Authoring notes (learned the hard way)
 
@@ -55,3 +58,11 @@ cd docs && python3 -m http.server 8471
   (`p(cls).`, `h2(cls).`, `table(cls).`) and `%(cls)%` spans only.
 - Per-page extras (e.g. the active-nav highlight) go through `--head`
   flags in `build.sh`, which are spliced verbatim into `<head>`.
+
+## The operator pages
+
+`ledger` reads `~/.local/share/devin/cli/sessions.db` read-only — same DB
+`otter-stats` uses — and `merges` is regenerated from `gh` searches
+(app-author + `app.devin.ai` session-link union). `python3 scripts/regen.py`
+refresh both data files; `merges` expects the harvested PR list at
+`/tmp/merges.json`.
