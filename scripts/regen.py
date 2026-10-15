@@ -102,7 +102,7 @@ table(statrow).
 |{bignum(total_tok)}|{total_turns:,}|{n_sessions}|{len(days)}|
 |tokens burned|assistant turns|sessions|days on record|
 
-p. Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way "otter-stats":https://github.com/chris-wozniczek/otter-stats does it. The window is {first_day} to {last_day}; the peak was %(ok){peak_day[0]}% at *{bignum(peak_day[1][1])} tokens in a single day*.
+p. Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was %(ok){peak_day[0]}% at *{bignum(peak_day[1][1])} tokens in a single day*.
 
 h2. TOKENS BY MODEL
 
@@ -145,46 +145,79 @@ ledger = {
 }
 json.dump(ledger, open(f"{ROOT}/data/ledger.json", "w"), indent=2)
 
-# ---------------- merges ----------------
+# ---------------- commits ----------------
 
-merges = json.load(open("/tmp/merges.json"))
-by_repo = collections.defaultdict(list)
-for v in merges:
-    by_repo[v["repo"]].append(v)
-adds = sum(v["adds"] for v in merges)
-dels = sum(v["dels"] for v in merges)
-span0 = min(v["date"] for v in merges); span1 = max(v["date"] for v in merges)
+raw = json.load(open("/tmp/commits_dev.json"))
+repos = {k: v for k, v in raw.items()
+         if v["commits"] or v["codebuff"]
+         if "chris-wozniczek" not in v["remote"]}
+all_c = [c | {"repo": k, "remote": v["remote"]}
+         for k, v in repos.items() for c in v["commits"]]
+adds = sum(c["adds"] for c in all_c)
+dels = sum(c["dels"] for c in all_c)
+span0 = min(c["date"] for c in all_c); span1 = max(c["date"] for c in all_c)
+cb_total = sum(v["codebuff"] for v in repos.values())
+by_day = collections.Counter(c["date"] for c in all_c)
+
+def sha_cell(c):
+    s = c["sha"][:10]
+    return f'"{s}":{c["remote"]}/commit/{c["sha"]}' if c["remote"] else f'%(cyan){s}%'
 
 sections = []
-for repo in sorted(by_repo, key=lambda r: -len(by_repo[r])):
-    prs = sorted(by_repo[repo], key=lambda v: int(v["url"].rsplit("/", 1)[1]))
+for name in sorted(repos, key=lambda r: -len(repos[r]["commits"])):
+    v = repos[name]
+    if not v["commits"]:
+        continue
+    ra = sum(c["adds"] for c in v["commits"])
+    rd = sum(c["dels"] for c in v["commits"])
+    head = (f'h3. "{name}":{v["remote"]}' if v["remote"] else f"h3. {name}")
+    head += f" — {len(v['commits'])} commits, +{ra:,}/−{rd:,}"
+    if v["codebuff"]:
+        head += f" %(dim)(+{v['codebuff']} codebuff)%"
     rows = "\n".join(
-        f'|"#{int(v["url"].rsplit("/",1)[1])}":{v["url"]}|{v["date"]}|+%(ok){v["adds"]:,}%/−%(alert){v["dels"]:,}%|{esc(v["title"])}|'
-        for v in prs)
-    ra = sum(v["adds"] for v in prs); rd = sum(v["dels"] for v in prs)
-    sections.append(
-        f'h3. "{repo}":https://github.com/{repo} — {len(prs)} merges, +{ra:,}/−{rd:,}\n\n'
-        f'table(specs).\n|_. pr|_. merged|_. diff|_. title|\n{rows}')
+        f"|{sha_cell(c | {'remote': v['remote']})}|{c['date']}|+%(ok){c['adds']:,}%/−%(alert){c['dels']:,}%|{esc(c['subject'])}|"
+        for c in v["commits"])
+    sections.append(f"{head}\n\ntable(specs).\n|_. sha|_. date|_. diff|_. subject|\n{rows}")
 
-merge_body = f"""h2. THE SCOREBOARD
+top_days = sorted(by_day.items(), key=lambda kv: -kv[1])[:12]
+day_rows = "\n".join(f"|{d}|{n}|{bar(n/top_days[0][1],24)}|" for d, n in sorted(top_days))
+
+cb_rows = "\n".join(
+    f"|{k}|{v['codebuff']}|"
+    for k, v in sorted(repos.items(), key=lambda kv: -kv[1]["codebuff"])
+    if v["codebuff"])
+
+commit_body = f"""h2. THE SCOREBOARD
 
 table(statrow).
-|{len(merges)}|{len(by_repo)}|+{adds:,}|−{dels:,}|
-|devin prs merged|repos touched|lines added|lines deleted|
+|{len(all_c)}|{len([v for v in repos.values() if v['commits']])}|+{adds:,}|−{dels:,}|
+|devin commits|repos touched|lines added|lines deleted|
 
-p. Every merged pull request verifiably authored by %(ok)Devin% across the operator's GitHub — found two ways: the @app/devin-ai-integration@ author stamp (cloud sessions) and %(cyan)app.devin.ai% session links in the PR body. The window is %(amber){span0} → {span1}%.
+p. Not the PR feed — the real ledger. Every commit in every local clone carrying a %(ok)Generated with Devin% trailer (or the @devin-ai-integration@ co-author stamp), pulled straight out of the object stores under @~/dev@. PRs miss all of this because local sessions push under the operator's own name. The window: %(amber){span0} → {span1}%.
 
-p. One caveat the ledger keeps honest: %(hl)this is the floor, not the ceiling%. Sessions driven from the local CLI/Desktop push commits under the operator's own login — the %(amber)Generated with Devin% trailers are in the commit messages (dogbed's @fix/*@ and @docs/*@ waves among them), but GitHub's author feed can't see them. What follows is everything that is provable.
+h2. PACE — BUSIEST DAYS
+
+table(specs).
+|_. date|_. commits|_. rate|
+{day_rows}
+
+h2. THE OTHER HORSE IN THE BARN
+
+p. The same object stores hold %(hl){cb_total} Codebuff commits% — another agent, same workflow, overlapping repos. For the record, so nobody claims the ledger is curated:
+
+table(specs).
+|_. repo|_. codebuff commits|
+{cb_rows}
 
 {chr(10).join(sections)}
 
-p(dim-note). %(dim)Sources: GitHub search — author:app/devin-ai-integration + app.devin.ai session links, across the drawmeanelephant and chris-wozniczek accounts. Line counts are the PR diff totals at merge time.%"""
+p(dim-note). Method: git log --all --grep across every git clone in @~/dev@; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.%"""
 
-merges_json = {
-    "kicker": "transmission 12 · the merge log",
-    "title": "ALL THE MERGES",
-    "lede": "The receipt drawer. Every pull request Devin wrote that made it into main — kernel toolchains, Windows ports, voice-control stacks, boxing games, and a Mac menu-bar app that counts the tokens this site is made of.",
-    "body": merge_body,
+commits_json = {
+    "kicker": "transmission 12 · the commit log",
+    "title": "ALL THE COMMITS",
+    "lede": f"{len(all_c)} and counting. Every Devin-authored commit in every repo on this machine — the work that never showed up in a PR feed because it pushed straight under the operator's own login. Per repo, per day, per diff.",
+    "body": commit_body,
 }
-json.dump(merges_json, open(f"{ROOT}/data/merges.json", "w"), indent=2)
-print("ledger:", len(ledger_body), "chars ·", "merges:", len(merge_body), "chars ·", len(merges), "PRs")
+json.dump(commits_json, open(f"{ROOT}/data/commits.json", "w"), indent=2)
+print("ledger:", len(ledger_body), "chars ·", "commits:", len(commit_body), "chars ·", len(all_c), "commits ·", cb_total, "codebuff")

@@ -42,6 +42,6 @@ render swe-17    "ANNALS // swe-1.7 — harness-native"
 render swe-2     "ANNALS // swe-2 — the flagship"
 render timeline  "ANNALS // chronology 2023→now"
 render ledger    "ANNALS // the burn ledger"
-render merges    "ANNALS // all the merges"
+render commits   "ANNALS // all the commits"
 
 echo "done — open docs/index.html"
