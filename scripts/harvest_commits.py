@@ -39,6 +39,14 @@ def commits(repo, pattern):
                 if p[0].isdigit(): cur["adds"] += int(p[0])
                 if p[1].isdigit(): cur["dels"] += int(p[1])
 
+def bot_identity_shas(repo):
+    """SHAs where the bot is git author or committer, trailer or not."""
+    out = sh(repo, ["log", "--all", "--regexp-ignore-case",
+                    "--author=devin", "--format=%H"])
+    out += sh(repo, ["log", "--all", "--regexp-ignore-case",
+                    "--committer=devin", "--format=%H"])
+    return set(out.split())
+
 data = {}
 for name in sorted(os.listdir(DEV)):
     path = os.path.join(DEV, name)
@@ -51,6 +59,21 @@ for name in sorted(os.listdir(DEV)):
     # dedupe identical shas
     seen = {}
     for c in dev: seen[c["sha"]] = c
+    # union: commits where the bot is git author/committer without a trailer
+    for sha in bot_identity_shas(path) - set(seen):
+        meta = sh(path, ["show", sha, "--format=%ad%x09%s",
+                         "--date=short", "-s"]).strip()
+        adds = dels = 0
+        for nl in sh(path, ["show", sha, "--numstat",
+                            "--format=", "-s"]).splitlines():
+            p = nl.split("\t")
+            if len(p) == 3:
+                if p[0].isdigit(): adds += int(p[0])
+                if p[1].isdigit(): dels += int(p[1])
+        info = meta.split("\t", 1)
+        if len(info) == 2:
+            seen[sha] = {"sha": sha, "date": info[0], "subject": info[1],
+                         "adds": adds, "dels": dels, "bot": True}
     dev = sorted(seen.values(), key=lambda c: c["date"])
     cb = len(list(commits(path, PAT_CB)))
     if not dev and not cb:

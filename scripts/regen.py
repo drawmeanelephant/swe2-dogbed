@@ -175,7 +175,7 @@ for name in sorted(repos, key=lambda r: -len(repos[r]["commits"])):
     if v["codebuff"]:
         head += f" %(dim)(+{v['codebuff']} codebuff)%"
     rows = "\n".join(
-        f"|{sha_cell(c | {'remote': v['remote']})}|{c['date']}|+%(ok){c['adds']:,}%/−%(alert){c['dels']:,}%|{esc(c['subject'])}|"
+        f"|{sha_cell(c | {'remote': v['remote']})}|{c['date']}|+%(ok){c['adds']:,}%/−%(alert){c['dels']:,}%|{'%(amber)◆bot-id% ' if c.get('bot') else ''}{esc(c['subject'])}|"
         for c in v["commits"])
     sections.append(f"{head}\n\ntable(specs).\n|_. sha|_. date|_. diff|_. subject|\n{rows}")
 
@@ -211,7 +211,7 @@ table(specs).
 
 {chr(10).join(sections)}
 
-p(dim-note). Method: git log --all --grep across every git clone in @~/dev@; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.%"""
+p(dim-note). Method: git log --all --grep for the trailer, unioned with --author/--committer=devin for trailerless bot-authored commits (marked %(amber)◆bot-id%), across every git clone in @~/dev@; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.%"""
 
 commits_json = {
     "kicker": "transmission 12 · the commit log",
