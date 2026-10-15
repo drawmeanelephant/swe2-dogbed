@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANNALS // swe-1.7 — harness-native</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="The Cognition Annals">
+<meta property="og:description" content="A dogbed-compiled field archive of Cognition, Devin, and the SWE model line.">
+<style>.nav a[href="swe-17.html"]{color:#02120a;background:#ffb347;border-color:#ffb347;box-shadow:0 0 18px rgba(255,179,71,.45)}</style>
+</head>
+<body>
+<p class="statusbar"><span class="ok">●</span> THE COGNITION ANNALS · <span class="dim">node 07 · uplink secure</span> · channel: <span class="amber">DOGBED</span> · knap → k4o → textile → oliver → html</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a></p>
+<p class="kicker">transmission 08 · model wing, hall iv</p>
+<h1>SWE-1.7: HARNESS-NATIVE</h1>
+<p class="lede">July 8, 2026. The crossover point: a model trained directly inside the Devin agent harness, on tasks long enough that a single rollout blows past the context window. SWE-1.7 was the lab’s first claim to frontier-level intelligence — at a fraction of frontier-level cost.</p>
+<h2>TRAINED WHERE IT WORKS</h2>
+<p>Every SWE model before this one was trained <span class="ok">for</span> a harness. SWE-1.7 was trained <span class="hl">inside</span> one. The Devin agent loop — plan, act, observe, retry — became the RL environment itself, which is a different claim than ‘evaluated in Devin’: the gradient went through the real thing.</p>
+<h2>THE TWO PROBLEMS LONG-HORIZON RL BRINGS</h2>
+<ul>
+<li><span class="cyan">Context exhaustion</span> — Devin tasks run long enough that rollouts exceed the raw context window; training had to teach the model to work beyond what it can literally see.</li>
+<li><span class="cyan">Reasoning bloat</span> — RL on reasoning tasks tends to inflate response lengths (the DeepSeek R1 effect). SWE-1.7 was trained to <span class="amber">elaborate only when the task is hard</span>, keeping routine work cheap.</li>
+</ul>
+<h2>THE NUMBERS ON THE PLACARD</h2>
+<table class="specs">
+<tr>
+<th>field</th>
+<th>entry</th>
+</tr>
+<tr>
+<td>released</td>
+<td>july 8, 2026</td>
+</tr>
+<tr>
+<td>claim</td>
+<td>frontier-level intelligence at a fraction of the cost</td>
+</tr>
+<tr>
+<td>training</td>
+<td>RL directly in the Devin harness, long-horizon tasks</td>
+</tr>
+<tr>
+<td>serving</td>
+<td>cerebras at <span class="ok">1000 tokens/sec</span></td>
+</tr>
+<tr>
+<td>variants</td>
+<td>SWE-1.7 · <span class="cyan">SWE-1.7 Lightning</span> (the cerebras speed tier)</td>
+</tr>
+<tr>
+<td>contemporaries</td>
+<td>kimi k2 · gpt-5.5 · glm · composer-1.5</td>
+</tr>
+</table>
+<h2>THE HISTORICAL FOOTNOTE</h2>
+<p>SWE-1.7’s most durable contribution to the archive may be as a <span class="amber">baseline</span>. Two months later, the SWE-2 announcement measured itself against this model: 58% fewer turns, 81% lower cost, first code edit at step 18 instead of step 48. Every artifact in a museum eventually becomes the ruler a newer artifact is measured with.</p>
+<blockquote>
+<p>From the start, we built Devin for completing asynchronous, long-running tasks. SWE-1.7 is trained directly in the Devin harness. <span class="dim">— Cognition, July 2026</span></p>
+</blockquote>
+<p>Final hall: <a href="swe-2.html">SWE-2</a> — the model this lineage was rehearsing for.</p>
+<p class="endmark">— <span class="dim">END OF TRANSMISSION · CTR-</span>(ok)VERIFIED% —</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a></p>
+<p class="ticker">+++ COGNITION ANNALS +++ DEVIN · THE AI SOFTWARE ENGINEER +++ SWE-1 → SWE-1.5 → SWE-1.6 → SWE-1.7 → SWE-2 +++ WINDSURF FOREVER +++ COMPILED BY DOGBED, NOT WRITTEN BY HAND +++ NO JAVASCRIPT WAS HARMED IN THE MAKING OF THIS ARCHIVE +++</p>
+<p class="colophon">rendered by <a href="https://github.com/drawmeanelephant/dogbed">dogbed</a> — a document compiler, not a CMS. one binary, one template, eleven documents.</p>
+</body>
+</html>

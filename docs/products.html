@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANNALS // museum of products</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="The Cognition Annals">
+<meta property="og:description" content="A dogbed-compiled field archive of Cognition, Devin, and the SWE model line.">
+<style>.nav a[href="products.html"]{color:#02120a;background:#ffb347;border-color:#ffb347;box-shadow:0 0 18px rgba(255,179,71,.45)}</style>
+</head>
+<body>
+<p class="statusbar"><span class="ok">●</span> THE COGNITION ANNALS · <span class="dim">node 07 · uplink secure</span> · channel: <span class="amber">DOGBED</span> · knap → k4o → textile → oliver → html</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a></p>
+<p class="kicker">transmission 04 · the museum</p>
+<h1>MUSEUM OF PRODUCTS</h1>
+<p class="lede">Not everything Cognition ships is a headline. This wing holds the side quests, the internal tools that escaped the building, and the small specialized models that never trend on launch day but run inside every Devin session.</p>
+<h2>EXHIBIT A — DEEPWIKI</h2>
+<p><span class="ok">April 2025</span>. Cognition noticed something funny: humans kept reading the documentation Devin wrote for itself to navigate codebases. So they industrialized it. DeepWiki generates a continuously-updated, interactive wiki — diagrams, architecture notes, Q&amp;A — for <span class="hl">every public GitHub repository</span>, free. Point it at a repo, get the museum tour.</p>
+<ul>
+<li><span class="amber">May 22, 2025</span> — the DeepWiki MCP server ships: codebase context and answers about any public repo, served to any MCP client in seconds.</li>
+<li>The private-repo siblings, <span class="cyan">Devin Wiki</span> and <span class="cyan">Devin Search</span>, do the same trick inside enterprises — plus research-mode deep dives into your own code.</li>
+</ul>
+<h2>EXHIBIT B — KEVIN-32B</h2>
+<p><span class="ok">Mid-2025</span>. Cognition’s first open-weights model is a 32B-parameter specialist named <span class="hl">Kevin</span> — literally <code>K(ernel D)evin</code> — trained with multi-turn RL to write and refine <span class="cyan">CUDA kernels</span>. The niche is the point: kernel work is iterative, machine-checkable, and has a verifiable reward (correctness × speedup), making it a perfect RL playground.</p>
+<table class="specs">
+<tr>
+<th>metric</th>
+<th>kevin-32b</th>
+<th>baseline</th>
+</tr>
+<tr>
+<td>correctness (KernelBench)</td>
+<td>82%</td>
+<td>56% (QwQ-32B base)</td>
+</tr>
+<tr>
+<td>dataset solved @ 8 refinements</td>
+<td>89%</td>
+<td>o4-mini 53% · o3 51%</td>
+</tr>
+<tr>
+<td>best@16 speedup vs PyTorch eager</td>
+<td>1.41x</td>
+<td>o4-mini 0.78x</td>
+</tr>
+</table>
+<p>The technique that mattered more than the weights: masking model thoughts across turns so context doesn’t explode, and letting the environment’s compiler feedback drive refinement. It shipped on Hugging Face and lives on as a research artifact — the first public proof that Cognition’s RL recipe works.</p>
+<h2>EXHIBIT C — THE INVISIBLE MODELS</h2>
+<p>The model picker shows the flagship. Under the floorboards run the specialists:</p>
+<ul>
+<li><span class="cyan">swe-grep</span> — released <span class="amber">October 16, 2025</span>. An agentic model trained purely for rapid context engineering: find the right files, fast. Powers Fast Context.</li>
+<li><span class="cyan">swe-check</span> — powers Quick Review: a fast, lightweight pass over diffs, optimized for the common ways code goes wrong.</li>
+<li><span class="cyan">SWE-1-mini</span> — the latency-constrained predictor inside Tab; guesses your next action before you make it. Covered in the <a href="swe-1.html">SWE-1 exhibit</a>.</li>
+</ul>
+<h2>EXHIBIT D — THE CONNECTIVE TISSUE</h2>
+<ul>
+<li><span class="amber">Devin API</span> — sessions, tasks, file uploads, results. The GA subscription shipped with it in December 2024; it turned Devin from a product into infrastructure.</li>
+<li><span class="amber">IDE extensions</span> — Devin inside VS Code et al. for teams that never open the web app.</li>
+<li><span class="amber">Ask Devin</span> — codebase Q&amp;A as a feature, the free-sample version of Search.</li>
+<li><span class="amber">Playbooks / Snapshots / Secrets / Knowledge</span> — the ops layer that makes an agent repeatable instead of lucky.</li>
+</ul>
+<h2>EXHIBIT E — THE LABELS ON THE BOTTLE CHANGE</h2>
+<p>The current menu, as archived: <span class="ok">Devin Web</span>, <span class="ok">Devin Desktop</span>, <span class="ok">Devin CLI</span>, <span class="ok">Fusion</span>, plus <span class="ok">DeepWiki</span> as the free public outpost. The museum updates when the company does; the date on the placard is October 2026.</p>
+<blockquote>
+<p>DeepWiki began as an internal data structure for Devin. Humans demanded it as a product. The best exhibit in this museum is a feature that unionized. <span class="dim">— the curator</span></p>
+</blockquote>
+<p class="endmark">— <span class="dim">END OF TRANSMISSION · CTR-</span>(ok)VERIFIED% —</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a></p>
+<p class="ticker">+++ COGNITION ANNALS +++ DEVIN · THE AI SOFTWARE ENGINEER +++ SWE-1 → SWE-1.5 → SWE-1.6 → SWE-1.7 → SWE-2 +++ WINDSURF FOREVER +++ COMPILED BY DOGBED, NOT WRITTEN BY HAND +++ NO JAVASCRIPT WAS HARMED IN THE MAKING OF THIS ARCHIVE +++</p>
+<p class="colophon">rendered by <a href="https://github.com/drawmeanelephant/dogbed">dogbed</a> — a document compiler, not a CMS. one binary, one template, eleven documents.</p>
+</body>
+</html>
