@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Regenerate data/ledger.json and data/merges.json from live sources.
+"""Regenerate data/ledger.json and data/commits.json from live sources.
 
 ledger: ~/.local/share/devin/cli/sessions.db (read-only) — assistant turns
 deduped by session/message key, same as otter-stats' structural method.
-merges: /tmp/merges.json harvested via `gh` (app-author + session-link union).
+commits: /tmp/commits_dev.json produced by scripts/harvest_commits.py
+(trailer + author/committer union across local clones).
+Body markup is Markdown + raw HTML (dogbed's post-k4o-rewrite pipeline).
 """
 import json, os, sqlite3, collections, html
 
@@ -11,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = os.path.expanduser("~/.local/share/devin/cli/sessions.db")
 
 def esc(s):
-    return s.replace("|", "/").replace('"', "'")
+    return html.escape(s).replace("|", "/").replace('"', "'")
 
 def bignum(n):
     if n >= 1e9: return f"{n/1e9:.2f}B"
@@ -81,61 +83,66 @@ for m, (t, i, o, cr, cc) in sorted(models.items(),
     tot = i + o + cr + cc
     name = m or "(unset)"
     model_rows.append(
-        f"|%(cyan){name}%|{sess_per_model.get(m,0)}|{t:,}|{bignum(i)}|{bignum(o)}|{bignum(cr)}|{bignum(cc)}|*{bignum(tot)}*|{tot/grand*100:.1f}% {bar(tot/grand,10)}|")
+        f'<tr><td><span class="cyan">{name}</span></td><td>{sess_per_model.get(m,0)}</td><td>{t:,}</td><td>{bignum(i)}</td><td>{bignum(o)}</td><td>{bignum(cr)}</td><td>{bignum(cc)}</td><td><strong>{bignum(tot)}</strong></td><td>{tot/grand*100:.1f}% {bar(tot/grand,10)}</td></tr>')
 
 day_rows = []
 dmax = max(v[1] for v in days.values())
 for d in sorted(days):
     t, tok = days[d]
-    day_rows.append(f"|{d}|{t:,}|*{bignum(tok)}*|{bar(tok/dmax,30)}|")
+    day_rows.append(f"<tr><td>{d}</td><td>{t:,}</td><td><strong>{bignum(tok)}</strong></td><td>{bar(tok/dmax,30)}</td></tr>")
 
 proj_rows = []
 for p, tok in proj_tok.most_common(15):
-    proj_rows.append(f"|{esc(p)}|*{bignum(tok)}*|{tok/grand*100:.1f}%|")
+    proj_rows.append(f"<tr><td>{esc(p)}</td><td><strong>{bignum(tok)}</strong></td><td>{tok/grand*100:.1f}%</td></tr>")
 
 first_day = sorted(days)[0]; last_day = sorted(days)[-1]
 peak_day = max(days.items(), key=lambda kv: kv[1][1])
 
-ledger_body = f"""h2. THE TOP LINE
+ledger_body = f"""## THE TOP LINE
 
-table(statrow).
-|{bignum(total_tok)}|{total_turns:,}|{n_sessions}|{len(days)}|
-|tokens burned|assistant turns|sessions|days on record|
+<table class="statrow">
+<tr><td>{bignum(total_tok)}</td><td>{total_turns:,}</td><td>{n_sessions}</td><td>{len(days)}</td></tr>
+<tr><td>tokens burned</td><td>assistant turns</td><td>sessions</td><td>days on record</td></tr>
+</table>
 
-p. Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was %(ok){peak_day[0]}% at *{bignum(peak_day[1][1])} tokens in a single day*.
+Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was <span class="ok">{peak_day[0]}</span> at <strong>{bignum(peak_day[1][1])} tokens in a single day</strong>.
 
-h2. TOKENS BY MODEL
+## TOKENS BY MODEL
 
-table(specs).
-|_. model|_. sessions|_. turns|_. input|_. output|_. cache read|_. cache write|_. total|_. share|
+<table class="specs">
+<tr><th>model</th><th>sessions</th><th>turns</th><th>input</th><th>output</th><th>cache read</th><th>cache write</th><th>total</th><th>share</th></tr>
 {chr(10).join(model_rows)}
+</table>
 
-p(dim-note). %(dim)Honest footnote: cache-read dominates the ledger — it is context re-read from the provider's cache, not fresh reasoning. Of swe-2-high's {bignum(models['swe-2-high'][1]+models['swe-2-high'][2]+models['swe-2-high'][3])} tokens, {bignum(models['swe-2-high'][3])} are cache reads. Output tokens — the part that is actually authored — total {bignum(sum(v[2] for v in models.values()))} across all models.%
+<p class="dim-note"><span class="dim">Honest footnote: cache-read dominates the ledger — it is context re-read from the provider's cache, not fresh reasoning. Of swe-2-high's {bignum(models['swe-2-high'][1]+models['swe-2-high'][2]+models['swe-2-high'][3])} tokens, {bignum(models['swe-2-high'][3])} are cache reads. Output tokens — the part that is actually authored — total {bignum(sum(v[2] for v in models.values()))} across all models.</span></p>
 
-h2. BURN BY DAY
+## BURN BY DAY
 
-table(specs).
-|_. date|_. turns|_. tokens|_. load|
+<table class="specs">
+<tr><th>date</th><th>turns</th><th>tokens</th><th>load</th></tr>
 {chr(10).join(day_rows)}
+</table>
 
-h2. WHERE IT WENT — TOP PROJECTS
+## WHERE IT WENT — TOP PROJECTS
 
-table(specs).
-|_. working directory|_. tokens|_. share|
+<table class="specs">
+<tr><th>working directory</th><th>tokens</th><th>share</th></tr>
 {chr(10).join(proj_rows)}
+</table>
 
-h2. SESSION MODES
+## SESSION MODES
 
-table(specs).
-|_. mode|_. sessions|
-|accept-edits|532|
-|bypass|69|
-|smart|58|
-|(unset)|2|
+<table class="specs">
+<tr><th>mode</th><th>sessions</th></tr>
+<tr><td>accept-edits</td><td>532</td></tr>
+<tr><td>bypass</td><td>69</td></tr>
+<tr><td>smart</td><td>58</td></tr>
+<tr><td>(unset)</td><td>2</td></tr>
+</table>
 
-bq. The operator ran %(amber){n_sessions} sessions% in nine days and let the agents keep the receipts. Most of them ran in %(cyan)accept-edits% mode — trust, but verify the diff.
+> The operator ran <span class="amber">{n_sessions} sessions</span> in nine days and let the agents keep the receipts. Most of them ran in <span class="cyan">accept-edits</span> mode — trust, but verify the diff.
 
-p(dim-note). Source: ~/.local/share/devin/cli/sessions.db, opened read-only, same database otter-stats reads. Token counts are provider-reported per assistant turn; metrics-missing turns (rare) count as zero. Compiled {last_day}."""
+<p class="dim-note">Source: ~/.local/share/devin/cli/sessions.db, opened read-only, same database otter-stats reads. Token counts are provider-reported per assistant turn; metrics-missing turns (rare) count as zero. Compiled {last_day}.</p>"""
 
 ledger = {
     "kicker": "transmission 11 · the operator's ledger",
@@ -161,7 +168,8 @@ by_day = collections.Counter(c["date"] for c in all_c)
 
 def sha_cell(c):
     s = c["sha"][:10]
-    return f'"{s}":{c["remote"]}/commit/{c["sha"]}' if c["remote"] else f'%(cyan){s}%'
+    return (f'<a href="{c["remote"]}/commit/{c["sha"]}">{s}</a>'
+            if c["remote"] else f'<span class="cyan">{s}</span>')
 
 sections = []
 for name in sorted(repos, key=lambda r: -len(repos[r]["commits"])):
@@ -170,48 +178,53 @@ for name in sorted(repos, key=lambda r: -len(repos[r]["commits"])):
         continue
     ra = sum(c["adds"] for c in v["commits"])
     rd = sum(c["dels"] for c in v["commits"])
-    head = (f'h3. "{name}":{v["remote"]}' if v["remote"] else f"h3. {name}")
+    head = (f'### <a href="{v["remote"]}">{esc(name)}</a>'
+            if v["remote"] else f"### {esc(name)}")
     head += f" — {len(v['commits'])} commits, +{ra:,}/−{rd:,}"
     if v["codebuff"]:
-        head += f" %(dim)(+{v['codebuff']} codebuff)%"
+        head += f' <span class="dim">(+{v["codebuff"]} codebuff)</span>'
     rows = "\n".join(
-        f"|{sha_cell(c | {'remote': v['remote']})}|{c['date']}|+%(ok){c['adds']:,}%/−%(alert){c['dels']:,}%|{'%(amber)◆bot-id% ' if c.get('bot') else ''}{esc(c['subject'])}|"
+        f'<tr><td>{sha_cell(c | {"remote": v["remote"]})}</td><td>{c["date"]}</td><td>+<span class="ok">{c["adds"]:,}</span>/−<span class="alert">{c["dels"]:,}</span></td><td>{"<span class=\"amber\">◆bot-id</span> " if c.get("bot") else ""}{esc(c["subject"])}</td></tr>'
         for c in v["commits"])
-    sections.append(f"{head}\n\ntable(specs).\n|_. sha|_. date|_. diff|_. subject|\n{rows}")
+    sections.append(
+        f'{head}\n\n<table class="specs">\n<tr><th>sha</th><th>date</th><th>diff</th><th>subject</th></tr>\n{rows}\n</table>')
 
 top_days = sorted(by_day.items(), key=lambda kv: -kv[1])[:12]
-day_rows = "\n".join(f"|{d}|{n}|{bar(n/top_days[0][1],24)}|" for d, n in sorted(top_days))
+day_rows = "\n".join(f"<tr><td>{d}</td><td>{n}</td><td>{bar(n/top_days[0][1],24)}</td></tr>" for d, n in sorted(top_days))
 
 cb_rows = "\n".join(
-    f"|{k}|{v['codebuff']}|"
+    f"<tr><td>{esc(k)}</td><td>{v['codebuff']}</td></tr>"
     for k, v in sorted(repos.items(), key=lambda kv: -kv[1]["codebuff"])
     if v["codebuff"])
 
-commit_body = f"""h2. THE SCOREBOARD
+commit_body = f"""## THE SCOREBOARD
 
-table(statrow).
-|{len(all_c)}|{len([v for v in repos.values() if v['commits']])}|+{adds:,}|−{dels:,}|
-|devin commits|repos touched|lines added|lines deleted|
+<table class="statrow">
+<tr><td>{len(all_c)}</td><td>{len([v for v in repos.values() if v['commits']])}</td><td>+{adds:,}</td><td>−{dels:,}</td></tr>
+<tr><td>devin commits</td><td>repos touched</td><td>lines added</td><td>lines deleted</td></tr>
+</table>
 
-p. Not the PR feed — the real ledger. Every commit in every local clone carrying a %(ok)Generated with Devin% trailer (or the @devin-ai-integration@ co-author stamp), pulled straight out of the object stores under @~/dev@. PRs miss all of this because local sessions push under the operator's own name. The window: %(amber){span0} → {span1}%.
+Not the PR feed — the real ledger. Every commit in every local clone carrying a <span class="ok">Generated with Devin</span> trailer (or the <code>devin-ai-integration</code> co-author stamp), pulled straight out of the object stores under <code>~/dev</code>. PRs miss all of this because local sessions push under the operator's own name. The window: <span class="amber">{span0} → {span1}</span>.
 
-h2. PACE — BUSIEST DAYS
+## PACE — BUSIEST DAYS
 
-table(specs).
-|_. date|_. commits|_. rate|
+<table class="specs">
+<tr><th>date</th><th>commits</th><th>rate</th></tr>
 {day_rows}
+</table>
 
-h2. THE OTHER HORSE IN THE BARN
+## THE OTHER HORSE IN THE BARN
 
-p. The same object stores hold %(hl){cb_total} Codebuff commits% — another agent, same workflow, overlapping repos. For the record, so nobody claims the ledger is curated:
+The same object stores hold <span class="hl">{cb_total} Codebuff commits</span> — another agent, same workflow, overlapping repos. For the record, so nobody claims the ledger is curated:
 
-table(specs).
-|_. repo|_. codebuff commits|
+<table class="specs">
+<tr><th>repo</th><th>codebuff commits</th></tr>
 {cb_rows}
+</table>
 
 {chr(10).join(sections)}
 
-p(dim-note). Method: git log --all --grep for the trailer, unioned with --author/--committer=devin for trailerless bot-authored commits (marked %(amber)◆bot-id%), across every git clone in @~/dev@; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.%"""
+<p class="dim-note">Method: git log --all --grep for the trailer, unioned with --author/--committer=devin for trailerless bot-authored commits (marked <span class="amber">◆bot-id</span>), across every git clone in <code>~/dev</code>; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.</p>"""
 
 commits_json = {
     "kicker": "transmission 12 · the commit log",

@@ -10,12 +10,15 @@ One stylesheet. Zero JavaScript.
 ## Layout
 
 ```
-bin/dogbed     vendored dogbed 0.1.0 binary (static, no deps)
+bin/dogbed     vendored dogbed binary (static, no deps) — post-0.1.0 main
+               build: knap → k4o → Markdown → oliver (Obsidian ext set) → HTML
 src/page.knap  the single shared template (nav, statusbar, ticker, colophon)
-data/*.json    one content file per page — Textile markup inside JSON strings
+data/*.json    one content file per page — Markdown + raw-HTML in JSON strings
 docs/          rendered output + style.css + assets
 build.sh       renders every page (temp-file + rename, like upstream docs)
-scripts/regen.py  rebuilds data/ledger.json + merges.json from live sources
+scripts/regen.py      rebuilds data/ledger.json + commits.json from live sources
+scripts/migrate_textile.py  the one-shot Textile→Markdown converter used for
+                      the dogbed k4o/oliver bump (kept for reference)
 ```
 
 ## Build
@@ -47,22 +50,29 @@ cd docs && python3 -m http.server 8471
 | `swe-2` | flagship — Kimi K3 base, effort levels |
 | `timeline` | the full 2023→2026 chronology |
 | `ledger` | the operator's burn ledger — tokens by model/day/project |
-| `merges` | every merged Devin PR, scraped from GitHub |
+| `commits` | every Devin-authored commit across local clones |
 
 ## Authoring notes (learned the hard way)
 
-- `%(cls)span%` spans cannot contain a literal `%` or an unmatched `~`.
-  Put the `%` outside the span, or use `*strong*`/`_em_` instead.
-- `bc.`/`pre.` blocks cannot contain blank lines.
-- Raw HTML in data is escaped — layout hooks come from block classes
-  (`p(cls).`, `h2(cls).`, `table(cls).`) and `%(cls)%` spans only.
+- dogbed's IR is now **Markdown, not Textile** (k4o fidelity rewrite +
+  oliver 1.3). Body content is CommonMark-ish; `*item` bullets, `1.`
+  numbered items, `>` quotes, `##`/`###` headings work as usual.
+- Raw HTML in data now passes straight through — that is the layout
+  hook. Classes come from real tags: `<p class="lede">`,
+  `<table class="specs">`, `<pre class="ascii"><code>`,
+  `<span class="ok">`. Escape `&`, `<`, `>` in prose yourself.
+- HTML blocks run to the next blank line — nothing between
+  `</table>` and the following block or it gets swallowed.
+- No textile-style constructs survive: `p(cls).`, `%(cls)%`,
+  `"text":url`, `table(cls).`, `bc.` are all literal text now.
 - Per-page extras (e.g. the active-nav highlight) go through `--head`
   flags in `build.sh`, which are spliced verbatim into `<head>`.
 
 ## The operator pages
 
 `ledger` reads `~/.local/share/devin/cli/sessions.db` read-only — same DB
-`otter-stats` uses — and `merges` is regenerated from `gh` searches
-(app-author + `app.devin.ai` session-link union). `python3 scripts/regen.py`
-refresh both data files; `merges` expects the harvested PR list at
-`/tmp/merges.json`.
+`otter-stats` uses — and `commits` is regenerated from
+`scripts/harvest_commits.py` (git-log trailer + author/committer union
+across every clone in `~/dev`). `python3 scripts/regen.py` refreshes both
+data files; `commits` expects the harvested list at
+`/tmp/commits_dev.json`.
