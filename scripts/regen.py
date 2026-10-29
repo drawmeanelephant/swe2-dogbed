@@ -58,9 +58,12 @@ sess_per_model = collections.Counter()
 n_sessions = con.execute("SELECT COUNT(*) FROM sessions").fetchone()[0]
 span = con.execute(
     "SELECT MIN(created_at), MAX(last_activity_at) FROM sessions").fetchone()
-for wd, mdl, n in con.execute(
-        "SELECT working_directory, model, COUNT(*) FROM sessions GROUP BY working_directory, model"):
+for mdl, n in con.execute(
+        "SELECT model, COUNT(*) FROM sessions GROUP BY model"):
     sess_per_model[mdl] += n
+mode_rows_db = con.execute(
+    "SELECT agent_mode, COUNT(*) FROM sessions GROUP BY agent_mode"
+    " ORDER BY 2 DESC").fetchall()
 wd_of = dict(con.execute("SELECT id, working_directory FROM sessions"))
 
 total_turns = total_tok = 0
@@ -72,7 +75,12 @@ for model, day, sid, i, o, cr, cc in con.execute(TURNS_SQL):
     total_tok += tok; total_turns += 1; cr_total += cr
     days[day][0] += 1; days[day][1] += tok
     wd = wd_of.get(sid) or "?"
-    proj = wd.replace("/Users/tbuddy/dev/", "")
+    if wd.startswith("/Users/tbuddy/"):
+        proj = wd[len("/Users/tbuddy/"):]
+    elif wd.startswith(("/private/var/folders/", "/var/folders/", "/tmp/")):
+        proj = "(ephemeral tmpdir)"
+    else:
+        proj = wd
     proj_tok[proj] += tok
 con.close()
 
@@ -97,6 +105,13 @@ for p, tok in proj_tok.most_common(15):
 
 first_day = sorted(days)[0]; last_day = sorted(days)[-1]
 peak_day = max(days.items(), key=lambda kv: kv[1][1])
+n_days = len(days)
+top_model = max(models, key=lambda m: sum(models[m][1:]))
+tm = models[top_model]
+
+mode_rows = "\n".join(
+    f"<tr><td>{mode or '(unset)'}</td><td>{n}</td></tr>"
+    for mode, n in mode_rows_db)
 
 ledger_body = f"""## THE TOP LINE
 
@@ -105,7 +120,7 @@ ledger_body = f"""## THE TOP LINE
 <tr><td>tokens burned</td><td>assistant turns</td><td>sessions</td><td>days on record</td></tr>
 </table>
 
-Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was <span class="ok">{peak_day[0]}</span> at <strong>{bignum(peak_day[1][1])} tokens in a single day</strong>.
+{n_days} days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was <span class="ok">{peak_day[0]}</span> at <strong>{bignum(peak_day[1][1])} tokens in a single day</strong>.
 
 ## TOKENS BY MODEL
 
@@ -114,7 +129,7 @@ Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every
 {chr(10).join(model_rows)}
 </table>
 
-<p class="dim-note"><span class="dim">Honest footnote: cache-read dominates the ledger — it is context re-read from the provider's cache, not fresh reasoning. Of swe-2-high's {bignum(models['swe-2-high'][1]+models['swe-2-high'][2]+models['swe-2-high'][3])} tokens, {bignum(models['swe-2-high'][3])} are cache reads. Output tokens — the part that is actually authored — total {bignum(sum(v[2] for v in models.values()))} across all models.</span></p>
+<p class="dim-note"><span class="dim">Honest footnote: cache-read dominates the ledger — it is context re-read from the provider's cache, not fresh reasoning. Of {top_model}'s {bignum(tm[1]+tm[2]+tm[3])} tokens, {bignum(tm[3])} are cache reads. Output tokens — the part that is actually authored — total {bignum(sum(v[2] for v in models.values()))} across all models.</span></p>
 
 ## BURN BY DAY
 
@@ -134,13 +149,10 @@ Nine days of local Devin CLI/Desktop telemetry — every assistant turn in every
 
 <table class="specs">
 <tr><th>mode</th><th>sessions</th></tr>
-<tr><td>accept-edits</td><td>532</td></tr>
-<tr><td>bypass</td><td>69</td></tr>
-<tr><td>smart</td><td>58</td></tr>
-<tr><td>(unset)</td><td>2</td></tr>
+{mode_rows}
 </table>
 
-> The operator ran <span class="amber">{n_sessions} sessions</span> in nine days and let the agents keep the receipts. Most of them ran in <span class="cyan">accept-edits</span> mode — trust, but verify the diff.
+> The operator ran <span class="amber">{n_sessions} sessions</span> in {n_days} days and let the agents keep the receipts. Most of them ran in <span class="cyan">accept-edits</span> mode — trust, but verify the diff.
 
 <p class="dim-note">Source: ~/.local/share/devin/cli/sessions.db, opened read-only, same database otter-stats reads. Token counts are provider-reported per assistant turn; metrics-missing turns (rare) count as zero. Compiled {last_day}.</p>"""
 
