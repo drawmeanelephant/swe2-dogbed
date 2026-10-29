@@ -10,8 +10,9 @@ One stylesheet. Zero JavaScript.
 ## Layout
 
 ```
-bin/dogbed     vendored dogbed binary (static, no deps) — post-0.1.0 main
-               build: knap → k4o → Markdown → oliver (Obsidian ext set) → HTML
+bin/dogbed     vendored dogbed binary (static, no deps) — main @ d96b125
+               (k4o aeba163 + oliver 1.3, oliver-format Markdown):
+               knap → k4o → Markdown → oliver (Obsidian ext set) → HTML
 src/page.knap  the single shared template (nav, statusbar, ticker, colophon)
 data/*.json    one content file per page — Markdown + raw-HTML in JSON strings
 docs/          rendered output + style.css + assets
