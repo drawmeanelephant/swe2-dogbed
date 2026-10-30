@@ -23,6 +23,7 @@ render() { # page "title"
         --head '<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">' \
         --head '<meta property="og:title" content="The Cognition Annals">' \
         --head '<meta property="og:description" content="A dogbed-compiled field archive of Cognition, Devin, and the SWE model line.">' \
+        --head '<meta property="og:image" content="https://drawmeanelephant.github.io/swe2-dogbed/assets/burn-ledger-october-2026.png">' \
         --head "<style>.nav a[href=\"$page.html\"]{color:#02120a;background:#ffb347;border-color:#ffb347;box-shadow:0 0 18px rgba(255,179,71,.45)}</style>" \
         > "$tmp"
     mv -f "$tmp" "docs/$page.html"
