@@ -44,5 +44,6 @@ render swe-2     "ANNALS // swe-2 — the flagship"
 render timeline  "ANNALS // chronology 2023→now"
 render ledger    "ANNALS // the burn ledger"
 render commits   "ANNALS // all the commits"
+render debacle   "ANNALS // the wrong-model debacle"
 
 echo "done — open docs/index.html"
