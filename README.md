@@ -1,10 +1,10 @@
 # THE COGNITION ANNALS
 
 A standalone showcase site for **dogbed** — the document compiler —
-rendered as a thirteen-page "phosphor CRT" museum of Cognition, Devin, and
+rendered as a fourteen-page "phosphor CRT" museum of Cognition, Devin, and
 the SWE model line (SWE-1 through SWE-2).
 
-One `page.knap` template + thirteen JSON files → thirteen HTML documents.
+One `page.knap` template + fourteen JSON files → fourteen HTML documents.
 One stylesheet. Zero JavaScript.
 
 ## Layout
@@ -52,6 +52,7 @@ cd docs && python3 -m http.server 8471
 | `timeline` | the full 2023→2026 chronology |
 | `ledger` | the operator's burn ledger — tokens by model/day/project |
 | `commits` | every Devin-authored commit across local clones |
+| `debacle` | the wrong-model incident — a swe-2-high review served by terra |
 
 ## Authoring notes (learned the hard way)
 

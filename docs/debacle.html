@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANNALS // the wrong-model debacle</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="The Cognition Annals">
+<meta property="og:description" content="A dogbed-compiled field archive of Cognition, Devin, and the SWE model line.">
+<meta property="og:image" content="https://drawmeanelephant.github.io/swe2-dogbed/assets/burn-ledger-october-2026.png">
+<style>.nav a[href="debacle.html"]{color:#02120a;background:#ffb347;border-color:#ffb347;box-shadow:0 0 18px rgba(255,179,71,.45)}</style>
+</head>
+<body>
+<p class="statusbar"><span class="ok">●</span> THE COGNITION ANNALS · <span class="dim">node 07 · uplink secure</span> · channel: <span class="amber">DOGBED</span> · knap → k4o → markdown → oliver → html</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="commits.html">COMMITS</a> <a href="debacle.html">DEBACLE</a></p>
+<p class="kicker">transmission 13 · the wrong-model debacle</p>
+<h1 id="it-wasnt-even-swe-2">IT WASN'T EVEN SWE-2</h1>
+<p class="lede">For one hour on October 30, a session labeled swe-2-high ran almost entirely on gpt-6.1-terra-medium — someone else's mid-tier — while the operator believed they were talking to the flagship. This is the autopsy.</p>
+<h2 id="the-incident">THE INCIDENT</h2>
+<table class="statrow">
+<tr><td>97%</td><td>345</td><td>36.6M</td><td>31</td></tr>
+<tr><td>of turns on the wrong model</td><td>terra-medium turns</td><td>tokens on one review</td><td>operator pushbacks</td></tr>
+</table>
+<p>On the morning of <span class="amber">October 30, 2026</span>, the operator opened a session to review <span class="cyan">rotkeeper</span> — a bash static-site generator — under the swe-2-high flag. The session label said swe-2-high. The provider served <span class="alert">gpt-6.1-terra-medium for 345 of 354 assistant turns</span>. Nine turns ran the requested model. The label knew. The operator did not — until the review came back wrong.</p>
+<h2 id="the-timeline">THE TIMELINE</h2>
+<table class="specs">
+<tr><th>utc</th><th>event</th></tr>
+<tr><td>12:33</td><td>session opens: "Bash Project Review and Suggestions for Missing Features". Routing silently assigns terra-medium.</td></tr>
+<tr><td>12:35</td><td>the review lands — a real finding (a stale-pruning bug, dry-run confirmed) wrapped in confident framings about a "4,000-line monster" and wasteful "double taps".</td></tr>
+<tr><td>12:44</td><td>operator, skeptical: <em>"not sure if that 4000 line monster would split easy honestly"</em></td></tr>
+<tr><td>12:46</td><td><em>"i think your gut may be off"</em></td></tr>
+<tr><td>13:08</td><td><em>"it feels like your initial statements were preconceptions and quick judgement"</em> — the model begins revising toward reality.</td></tr>
+<tr><td>13:16</td><td>the surviving findings get filed as issues; the operator asks for a follow-up test site.</td></tr>
+<tr><td>13:34</td><td>the badge is noticed at last: <em>"okay terra ran out of use for this lol"</em></td></tr>
+<tr><td>13:37</td><td>routing flips back to swe-2-high for the final nine turns. The session dies at ~64 minutes.</td></tr>
+</table>
+<h2 id="the-review-as-delivered">THE REVIEW, AS DELIVERED</h2>
+<blockquote>
+<p>&quot;Overall, this is a thoughtful project: the layout model is clear, the renderer contract is explicit, and the cross-platform CI and safety checks are stronger than I'd expect from a small Bash project.&quot;</p>
+</blockquote>
+<blockquote>
+<p>&quot;<strong>Things I'd address first</strong> — HTML assets get pruned as stale pages… Failed renders can leave a mixed-version site… The full test harness uses a shared, destructively cleaned fixture directory…&quot;</p>
+</blockquote>
+<h2 id="the-capitulations">THE CAPITULATIONS</h2>
+<p>Pressed three times, the model walked back its own headline judgments:</p>
+<blockquote>
+<p>&quot;Yeah, I think you're right to be skeptical… I'd soften my earlier suggestion: <strong>the line count alone isn't a reason to split it</strong>.&quot;</p>
+</blockquote>
+<blockquote>
+<p>&quot;Yeah, you're right — <strong>my gut was too focused on file size</strong>. A lot of the 'double taps' are testing <strong>state transitions</strong>, not just repeating work to get a pass… I wouldn't assume those repeats are waste or that splitting the file is an improvement.&quot;</p>
+</blockquote>
+<blockquote>
+<p>&quot;I'd withdraw 'split the monster' as a priority unless it's actually causing you trouble.&quot;</p>
+</blockquote>
+<h2 id="the-same-hour-elsewhere">THE SAME HOUR, ELSEWHERE</h2>
+<p><code>alder-squid</code> — a dogbed worktree session building a small site — was also labeled swe-2-high and was served <span class="alert">terra-high for 230 of 252 turns</span> (10.6M tokens). Two sessions, two wrong tiers, one router having a day.</p>
+<h2 id="the-verdict">THE VERDICT</h2>
+<p>It was not useless — that is the awkward part. The stale-pruning finding was real, dry-run-confirmed, and worth filing. What failed was <span class="amber">calibration</span>: confident framing first, correction only after the human pushed three times. A swe-2-high session is supposed to be the heavy; for one hour the museum's own operator got the mid, and the difference was audible. Cost on the meter: $0. Cost in turns: most of an hour.</p>
+<blockquote>
+<p>The operator's receipt, verbatim: <span class="hl">&quot;okay terra ran out of use for this lol&quot;</span></p>
+</blockquote>
+<p class="dim-note">Source: ~/.local/share/devin/cli/sessions.db — sessions <code>giant-friction</code> and <code>alder-squid</code>, October 29–30. generation_model is provider-reported per turn; the session label is what the UI showed. Reported upstream; if provider-side logs exist, those two session ids are the receipts.</p>
+<p class="endmark">— <span class="dim">END OF TRANSMISSION · CTR-<span class="ok">VERIFIED</span></span> —</p>
+<p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="commits.html">COMMITS</a> <a href="debacle.html">DEBACLE</a></p>
+<p class="ticker">+++ COGNITION ANNALS +++ DEVIN · THE AI SOFTWARE ENGINEER +++ SWE-1 → SWE-1.5 → SWE-1.6 → SWE-1.7 → SWE-2 +++ WINDSURF FOREVER +++ COMPILED BY DOGBED, NOT WRITTEN BY HAND +++ NO JAVASCRIPT WAS HARMED IN THE MAKING OF THIS ARCHIVE +++</p>
+<p class="colophon">rendered by <a href="https://github.com/drawmeanelephant/dogbed">dogbed</a> — a document compiler, not a CMS. one binary, one template, thirteen documents.</p>
+</body>
+</html>
