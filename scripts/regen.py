@@ -122,6 +122,10 @@ ledger_body = f"""## THE TOP LINE
 
 {n_days} days of local Devin CLI/Desktop telemetry — every assistant turn in every session, deduplicated by message key the same way otter-stats does it. The window is {first_day} to {last_day}; the peak was <span class="ok">{peak_day[0]}</span> at <strong>{bignum(peak_day[1][1])} tokens in a single day</strong>.
 
+<img src="assets/burn-ledger-october-2026.png" alt="Phosphor-CRT exhibit card for the October 2026 burn ledger: 94 percent of tokens served from cache, flat subscription zero dollars extra.">
+
+<p class="dim-note"><span class="dim">The commemorative placard — generated for the October ledger. Image-gen license applies to the 'OCT 31' stamp; the record itself says {last_day}.</span></p>
+
 ## TOKENS BY MODEL
 
 <table class="specs">
