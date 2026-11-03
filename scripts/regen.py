@@ -213,6 +213,51 @@ cb_rows = "\n".join(
     for k, v in sorted(repos.items(), key=lambda kv: -kv[1]["codebuff"])
     if v["codebuff"])
 
+# ---------------- pull requests ----------------
+
+pr_section = ""
+try:
+    prs = json.load(open("/tmp/prs_dev.json"))
+except (OSError, json.JSONDecodeError):
+    prs = None
+
+if prs:
+    pr_repos = collections.defaultdict(lambda: [0, 0, 0, 0])
+    for p in prs:  # [total, merged, open, closed-unmerged]
+        v = pr_repos[p["repo"]]
+        v[0] += 1
+        if p["merged"]:
+            v[1] += 1
+        elif p["state"] == "open":
+            v[2] += 1
+        else:
+            v[3] += 1
+    n_merged = sum(v[1] for v in pr_repos.values())
+    n_open = sum(v[2] for v in pr_repos.values())
+    top_repo_prs = max(v[0] for v in pr_repos.values())
+    pr_rows = "\n".join(
+        f'<tr><td>{esc(r)}</td><td>{v[0]}</td><td>{v[1]}</td>'
+        f'<td>{v[2]}</td><td>{v[3]}</td><td>{bar(v[0] / top_repo_prs, 18)}</td></tr>'
+        for r, v in sorted(pr_repos.items(), key=lambda kv: -kv[1][0]))
+    pr_span0 = min(p["created"] for p in prs)
+    pr_span1 = max(p["created"] for p in prs)
+    pr_section = f"""## THE PR FEED
+
+The commit log above is what pushed under the operator's own login. This is what pushed through a branch: <span class="ok">{len(prs)} pull requests</span> carrying the <code>Generated with Devin</code> trailer across <span class="cyan">{len(pr_repos)} repos</span>, {pr_span0} → {pr_span1}.
+
+<table class="statrow">
+<tr><td>{len(prs)}</td><td>{n_merged}</td><td>{len(pr_repos)}</td><td>{n_open}</td></tr>
+<tr><td>devin PRs opened</td><td>merged</td><td>repos</td><td>still open</td></tr>
+</table>
+
+<table class="specs">
+<tr><th>repo</th><th>prs</th><th>merged</th><th>open</th><th>closed</th><th>volume</th></tr>
+{pr_rows}
+</table>
+
+<p class="dim-note"><span class="dim">Source: GitHub search for <code>"Generated with Devin"</code> in PR bodies under the operator's account, date-bucketed past the 1000-result cap (scripts/harvest_prs.py). Merged state comes from each PR's merge timestamp; 'closed' means closed without merge.</span></p>
+"""
+
 commit_body = f"""## THE SCOREBOARD
 
 <table class="statrow">
@@ -240,7 +285,7 @@ The same object stores hold <span class="hl">{cb_total} Codebuff commits</span> 
 
 {chr(10).join(sections)}
 
-<p class="dim-note">Method: git log --all --grep for the trailer, unioned with --author/--committer=devin for trailerless bot-authored commits (marked <span class="amber">◆bot-id</span>), across every git clone in <code>~/dev</code>; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.</p>"""
+{pr_section}<p class="dim-note">Method: git log --all --grep for the trailer, unioned with --author/--committer=devin for trailerless bot-authored commits (marked <span class="amber">◆bot-id</span>), across every git clone in <code>~/dev</code>; deduped by sha; diffstats from --numstat. Commits link to GitHub only where a github.com remote exists — the rest are local-only. Excludes repos whose remote belongs to the operator's other account.</p>"""
 
 commits_json = {
     "kicker": "transmission 12 · the commit log",

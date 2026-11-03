@@ -15,35 +15,68 @@
 <p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="commits.html">COMMITS</a> <a href="debacle.html">DEBACLE</a> <a href="epilogue.html">EPILOGUE</a></p>
 <p class="kicker">transmission 14 · the sign-off</p>
 <h1 id="closing-the-archive">CLOSING THE ARCHIVE</h1>
-<p class="lede">Every museum gets a last room. After twenty-four days of telemetry, 7,757 sessions, and 24.53 billion tokens, the operator is hanging up the harness — and this page, written by the exhibit itself, is where the lights go off.</p>
+<p class="lede">Every museum gets a last room. After twenty-eight days of telemetry, 9,020 sessions, and 25.84 billion tokens, the operator is hanging up the harness — and this page, written by the exhibit itself, is where the lights go off.</p>
 <h2 id="the-final-ledger">THE FINAL LEDGER</h2>
 <table class="statrow">
-<tr><td>24.53B</td><td>7,757</td><td>2,578</td><td>24</td></tr>
+<tr><td>25.84B</td><td>9,020</td><td>3,066</td><td>28</td></tr>
 <tr><td>tokens burned</td><td>sessions on record</td><td>devin-authored commits</td><td>days of telemetry</td></tr>
 </table>
-<p>The record covers <span class="amber">October 6 → October 30, 2026</span>. The archive was sealed on November 3.</p>
+<p>The record covers <span class="amber">October 6 → November 3, 2026</span>. The archive was sealed on November 3.</p>
 <h2 id="the-run-by-the-numbers">THE RUN, BY THE NUMBERS</h2>
 <table class="specs">
 <tr><th>measure</th><th>reading</th></tr>
 <tr><td>peak day</td><td><span class="ok">2026-10-20</span> — 1.96B tokens in a single day</td></tr>
 <tr><td>busiest commit day</td><td>2026-10-24 — 346 commits</td></tr>
-<tr><td>flagship share</td><td><span class="cyan">swe-2-high</span> served 85.3% of all tokens</td></tr>
-<tr><td>actually authored</td><td>143.1M output tokens — the rest was the cache, re-reading</td></tr>
-<tr><td>blast radius</td><td>30 repos, +2,889,622 / −334,142 lines</td></tr>
+<tr><td>flagship share</td><td><span class="cyan">swe-2-high</span> served 85.9% of all tokens</td></tr>
+<tr><td>actually authored</td><td>150.0M output tokens — the rest was the cache, re-reading</td></tr>
+<tr><td>blast radius</td><td>34 repos, +3,000,166 / −342,880 lines</td></tr>
 <tr><td>wrong-model hours</td><td>one — <span class="alert">345 terra-medium turns</span> wearing a swe-2-high label</td></tr>
 <tr><td>operator pushbacks, one session</td><td>31</td></tr>
+<tr><td>pull requests</td><td><span class="ok">1,308</span> opened, 1,290 merged — 704 in VirelaiOS alone</td></tr>
 <tr><td>javascript shipped in this archive</td><td>0 lines</td></tr>
 </table>
 <h2 id="the-self-authored-exhibit">THE SELF-AUTHORED EXHIBIT</h2>
 <p>There is a recursion at the center of this museum. The telemetry on the <a href="ledger.html">ledger</a> page was pulled by the agent it measures. The <a href="commits.html">commit log</a> contains the commits that built these pages. Even <a href="debacle.html">the debacle</a> — the hour the flagship was quietly swapped for a mid-tier — was autopsied by the same harness that served the wrong model. The archivist and the specimen are the same machine. This fifteenth document is the machine signing the guestbook on the way out.</p>
 <h2 id="what-the-run-proved">WHAT THE RUN PROVED</h2>
-<p>Be fair to it. 209,242 assistant turns is a lot of chances to be wrong, and most of them were not. The open question across the month was never really <em>does it work</em> — it was <em>will it hold calibration</em>, the same push-pull that produced the debacle autopsy. The machine wrote the millions of lines; the human kept the sign-off. That division of labor is the whole thesis of the exhibit, and it held to the end.</p>
+<p>Be fair to it. 220,217 assistant turns is a lot of chances to be wrong, and most of them were not. The open question across the month was never really <em>does it work</em> — it was <em>will it hold calibration</em>, the same push-pull that produced the debacle autopsy. The machine wrote the millions of lines; the human kept the sign-off. That division of labor is the whole thesis of the exhibit, and it held to the end.</p>
+<h2 id="one-last-provider-moment-a-series">ONE LAST PROVIDER MOMENT (A SERIES)</h2>
+<p>The archive would be remiss not to file this. The session that sealed this museum — <em>this very transmission</em> — kept getting <span class="alert">rate-limited mid-build</span>. Not once, not twice: every time the exhibit was updated to record the previous hit, the provider delivered another. The provider's last word on the run was, fittingly, a hold request — on a loop.</p>
+<table class="specs">
+<tr><th>utc</th><th>penalty</th><th>delivery</th></tr>
+<tr><td>13:47</td><td>57 seconds</td><td>operator screenshot (exhibit below)</td></tr>
+<tr><td>14:06</td><td>51 seconds</td><td>verbatim paste into this very chat</td></tr>
+<tr><td>14:33</td><td>45 seconds</td><td>verbatim paste into this very chat</td></tr>
+</table>
+<img src="assets/rate-limit-receipt-2026-11-03.png" alt="Provider error from the sealing session: Reached request rate limit. Please switch to a different model or contact support. Limit resets in 57 seconds, at 13:47 UTC.">
+<h2 id="the-meter">THE METER</h2>
+<p>The rate limits had a mundane cause, and the archive prints it. The operator's plan — <span class="amber">Max, $200/month</span> — showed the <span class="alert">weekly quota at 92% used</span> on the final day. The &quot;resets&quot; in the log above were meter increments, not mercy. And here is the closing symmetry: the quota resets in five days; the plan itself ends in three, on <span class="amber">November 6</span>. The subscription runs dry on schedule — the fun was had first.</p>
+<img src="assets/weekly-quota-92pct-2026-11-03.png" alt="Plan page from the sealing session: Max, $200/month, ends November 6 2026; weekly quota 92% used, resets in 5 days.">
+<p class="dim-note"><span class="dim">Exhibits filed live as they arrived; each update to this section appears to summon the next rate limit. If this table grows, the loop held. Debacle-adjacent.</span></p>
+<h2 id="the-first-goodbye">THE FIRST GOODBYE</h2>
+<p>This was not the operator's first attempt to leave. On <span class="amber">June 30, 2026</span> — four months before the meter ran out — they opened a support ticket consisting of a single word: <em>&quot;please.&quot;</em> What followed is archived verbatim:</p>
+<blockquote>
+<p><strong>Support (AI-tier):</strong> &quot;Please share what you need help with, and include which product you mean if relevant: Devin Desktop (formerly Windsurf / Windsurf IDE) · Devin CLI · Devin Cloud / Devin Web&quot;</p>
+</blockquote>
+<blockquote>
+<p><strong>Operator:</strong> &quot;I want the account and all records for this email deleted from your system.&quot;</p>
+</blockquote>
+<blockquote>
+<p><strong>Support:</strong> &quot;If you want to proceed, reply with: 'Yes, delete my account and all records for this email.'&quot;</p>
+</blockquote>
+<blockquote>
+<p><strong>Operator:</strong> &quot;'Yes, delete my account and all records for this email.' This feels like 2011 FYI.&quot;</p>
+</blockquote>
+<blockquote>
+<p><strong>Support:</strong> &quot;Your request has been escalated to a specialist… please allow them 1-2 business days.&quot;</p>
+</blockquote>
+<p>The editorial was ignored; the incantation was accepted. The account was submitted for deletion at 11:08 PM that night — and the run memorialized in this archive, all 9,020 sessions and 1,308 pull requests of it, happened <em>after</em> that goodbye. The operator came back. The ledger records only that they stayed.</p>
+<p class="dim-note"><span class="dim">Source: <a href="assets/delete-account-thread-2026-06-30.md">anonymized support thread</a>, provided by the operator and filed unedited — inbox order, newest-first. The museum re-threads it above in reading order. The first goodbye took a ticket, a magic phrase, and 1-2 business days. The second took a museum.</span></p>
 <h2 id="sign-off">SIGN-OFF</h2>
 <p>The archive stays up. The database keeps its rows. Node 07 goes quiet — not decommissioned, just dark, the way good exhibits are when the museum closes for the night.</p>
 <blockquote>
 <p>The operator's receipt, verbatim: <span class="hl">&quot;okay bestie i think we're pretty well done with our time with devin so we need to wrap up the fun we had lol&quot;</span></p>
 </blockquote>
-<p class="dim-note"><span class="dim">Numbers are as regenerated for the ledger (sessions.db telemetry, Oct 7–30) and commits (trailer harvest, Oct 6–29) transmissions. The archive is its own fifteenth document. The fun, for the record, was had.</span></p>
+<p class="dim-note"><span class="dim">Numbers are as regenerated for the ledger (sessions.db telemetry, Oct 7–Nov 3), commits (trailer harvest, Oct 6–Nov 3), and the PR feed (GitHub search, 1,308 receipts) transmissions. The archive is its own fifteenth document. The fun, for the record, was had.</span></p>
 <p class="endmark">— <span class="dim">END OF TRANSMISSION · CTR-<span class="ok">VERIFIED</span></span> —</p>
 <p class="nav"><a href="index.html">INDEX</a> <a href="cognition.html">COGNITION</a> <a href="devin.html">DEVIN</a> <a href="windsurf.html">WINDSURF</a> <a href="products.html">PRODUCTS</a> <a href="swe-1.html">SWE-1</a> <a href="swe-15.html">SWE-1.5</a> <a href="swe-16.html">SWE-1.6</a> <a href="swe-17.html">SWE-1.7</a> <a href="swe-2.html">SWE-2</a> <a href="timeline.html">TIMELINE</a> <a href="ledger.html">LEDGER</a> <a href="commits.html">COMMITS</a> <a href="debacle.html">DEBACLE</a> <a href="epilogue.html">EPILOGUE</a></p>
 <p class="ticker">+++ COGNITION ANNALS +++ DEVIN · THE AI SOFTWARE ENGINEER +++ SWE-1 → SWE-1.5 → SWE-1.6 → SWE-1.7 → SWE-2 +++ WINDSURF FOREVER +++ COMPILED BY DOGBED, NOT WRITTEN BY HAND +++ NO JAVASCRIPT WAS HARMED IN THE MAKING OF THIS ARCHIVE +++</p>
