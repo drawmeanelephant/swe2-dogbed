@@ -45,5 +45,6 @@ render timeline  "ANNALS // chronology 2023→now"
 render ledger    "ANNALS // the burn ledger"
 render commits   "ANNALS // all the commits"
 render debacle   "ANNALS // the wrong-model debacle"
+render epilogue  "ANNALS // the sign-off"
 
 echo "done — open docs/index.html"
