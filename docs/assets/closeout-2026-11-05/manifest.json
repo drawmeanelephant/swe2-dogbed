@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-05T14:39:45Z",
+  "user": "drawmeanelephant",
+  "since": "2026-10-01",
+  "until": "2026-11-05",
+  "includes_private": false,
+  "scope_checks": [
+    {
+      "scope": "user:drawmeanelephant",
+      "rest_count_verified": true
+    },
+    {
+      "scope": "author:drawmeanelephant",
+      "rest_count_verified": true
+    }
+  ],
+  "local_refs": [
+    {
+      "repository": "drawmeanelephant/escapement",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "571ce97b6184b52e3d38e5e7b8ca8760b088e256"
+    },
+    {
+      "repository": "drawmeanelephant/boris-content-audit",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "c8ace046d70973459cf2b65b6ab6b7c9d84af028"
+    },
+    {
+      "repository": "drawmeanelephant/boris.filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "97535d1f39ece03c211de0538e34af9361b6a721"
+    },
+    {
+      "repository": "drawmeanelephant/VirelaiOS",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "0ffd7dca44417ca7a042eba64f57942bf1b3f9ac"
+    },
+    {
+      "repository": "drawmeanelephant/zcn",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "5360aeaebc362fa982f785f284c9e7b5a36614ed"
+    },
+    {
+      "repository": "drawmeanelephant/muse.filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "d8dfdc197ecf29eb64708bae8a221bd351e12ba8"
+    },
+    {
+      "repository": "drawmeanelephant/solipsist",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "d1518c971c67c64e06dfd07fd21652603a3ddd10"
+    },
+    {
+      "repository": "drawmeanelephant/drawmeanelephant.com",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "9715fc96eb8d6651be4bf04f0a16f353a9c091a4"
+    },
+    {
+      "repository": "drawmeanelephant/zig-zouave",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "dd7995e25c6aace29db02fb1a99a6858a071b892"
+    },
+    {
+      "repository": "drawmeanelephant/factory-docs-boris",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "4a29dfe5fae96585429cd63a1b573b8338c37240"
+    },
+    {
+      "repository": "drawmeanelephant/setup-zig",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "31b51da6a961bb5903fef5cc8f22db25a0223d67"
+    },
+    {
+      "repository": "drawmeanelephant/content-upgrades",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "a47a36ca41a81012f531dcd593941842fd336760"
+    },
+    {
+      "repository": "drawmeanelephant/flint-client",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "be21d96eddb67fe1b69acb173f2ea0b67c7f7d73"
+    },
+    {
+      "repository": "drawmeanelephant/boris-migration-lab",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "9c9145771f42b13ffaf4d81e6af03d0e61ac3386"
+    },
+    {
+      "repository": "drawmeanelephant/agent-hub",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "6db64069854c56795a0656b5c5af9ad57b2326a4"
+    },
+    {
+      "repository": "drawmeanelephant/la-famille",
+      "private": false,
+      "default_ref": "refs/remotes/origin/master",
+      "default_tip": "02ed7cf2b991be431d0a01efd095f04cfda28b55"
+    },
+    {
+      "repository": "Kylrix/kylrix",
+      "private": false,
+      "default_ref": "refs/remotes/origin/master",
+      "default_tip": "23b9fb067b8ae88a5a49b3a196f9ae8391b70a66"
+    },
+    {
+      "repository": "drawmeanelephant/rotkeeper",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "5536b0c6094c87708feb60403e4a8f712dd32f38"
+    },
+    {
+      "repository": "drawmeanelephant/boris",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "9119b4f042976e5eb6eb7bec63cd113663de674f"
+    },
+    {
+      "repository": "drawmeanelephant/droids.filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "d2ec9ef44d6d8884130a194c545e6163a30fc2c5"
+    },
+    {
+      "repository": "drawmeanelephant/doom-engine",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "7778be276c50cde60032fe5356f2453d78068df4"
+    },
+    {
+      "repository": "drawmeanelephant/banal",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "69da3cdb8f00b4749e05124317bdc5108c5d16ef"
+    },
+    {
+      "repository": "drawmeanelephant/fart-app",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "3735dc897f5ba4b3ff0631c759111a3865740894"
+    },
+    {
+      "repository": "drawmeanelephant/swe2-dogbed",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "fa26451ab092a1ca5b8c7024d573e42cf4b6fece"
+    },
+    {
+      "repository": "drawmeanelephant/f-artcraft",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "4c7920bda0bd637b3f87397ffe7a5aee1b0b9d46"
+    },
+    {
+      "repository": "drawmeanelephant/mediluna",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "2d9479d2d63a3ee87eaa6973e39ab0188852d7e0"
+    },
+    {
+      "repository": "drawmeanelephant/z.filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "08baa51a115b77d797c417455addb23ca8f6bc84"
+    },
+    {
+      "repository": "drawmeanelephant/gostalgia",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "f67eeda581d888f8574fc2d01710c6191bcb3c16"
+    },
+    {
+      "repository": "drawmeanelephant/brownnote",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "de029194195658ca3e1a8eb899f39944a405a3a1"
+    },
+    {
+      "repository": "drawmeanelephant/muse-gadget-starters",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "46379f0390ad3d66999437b7628babb908be02b1"
+    },
+    {
+      "repository": "drawmeanelephant/thermalextractiondevices.com",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "0a5ff40bdbe3d8806ae669d9a66d1406bcce7f7f"
+    },
+    {
+      "repository": "drawmeanelephant/corgifever.com",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "d9045dac96a520da007ad21cedfdcdfe915a3dfa"
+    },
+    {
+      "repository": "drawmeanelephant/fullonrogues.org",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "ad2de869158dfc6c9fccbbfd5f865e2b584b8276"
+    },
+    {
+      "repository": "drawmeanelephant/squirrel.filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "658ff836b0ad854481bf94efddd19ec0baa7c1fc"
+    },
+    {
+      "repository": "drawmeanelephant/dogbed",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "a6335b8830f11f9b8d4fcc2c8cad74fc59b648b5"
+    },
+    {
+      "repository": "drawmeanelephant/flint-server",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "6426ea79626f61bbf14fbf585e8468f8b8b0eb51"
+    },
+    {
+      "repository": "drawmeanelephant/ninjam",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "80ead42f8d8deea91c00485661c1452db6e7434a"
+    },
+    {
+      "repository": "drawmeanelephant/filed.fyi",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "3b668c16838f2fa4be2c1105053b3d265a4ab4a0"
+    },
+    {
+      "repository": "drawmeanelephant/k4o",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "aeba16352a7b6c7fd8d54db53cb506bdf5ead994"
+    },
+    {
+      "repository": "drawmeanelephant/2nap",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "6ab35fdc28bef6cc2446a29894adcf0f3d4de557"
+    },
+    {
+      "repository": "drawmeanelephant/atmosplorer",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "806db2a711f8a3a2d903f0fafe20d09ffc4a9480"
+    },
+    {
+      "repository": "Forward-Future/folio",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "c72f8cfa06f380aa082f1c678e51058147a58253"
+    },
+    {
+      "repository": "cooklang/cookcli",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "df83728e08c12630eada2fd1feefd1652545c02f"
+    },
+    {
+      "repository": "drawmeanelephant/dogbed",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "a6335b8830f11f9b8d4fcc2c8cad74fc59b648b5"
+    },
+    {
+      "repository": "drawmeanelephant/oliver",
+      "private": false,
+      "default_ref": "refs/remotes/origin/main",
+      "default_tip": "62503d162cb032884bee82c167fe03fe573a410e"
+    }
+  ],
+  "limits": [
+    "PR coverage is owner-or-author account scope, merged within the UTC date window.",
+    "Markers are provenance evidence, not sole-authorship or quality claims.",
+    "No raw PR bodies, commit messages, email addresses, or chat transcripts are saved.",
+    "Local refs were read without fetching. Direct commits are not merged PRs.",
+    "CSV cells starting with spreadsheet formula characters have an apostrophe prefix."
+  ],
+  "summary": {
+    "merged_prs": 2696,
+    "repositories": 40,
+    "devin_marker_prs": 1764,
+    "devin_commit_only_prs": 456,
+    "no_recognized_agent_marker_prs": 595,
+    "local_devin_commits": 2789,
+    "local_default_branch_devin_commits": 1967
+  },
+  "files": {
+    "merged-prs.json": {
+      "sha256": "7a704f09e88ac39efad31ff62606ab663bb3399ea94636adb9b557872d20ede3",
+      "bytes": 2963636
+    },
+    "local-commits.json": {
+      "sha256": "58dabc5daae428ebe7c5646f8f0406be89bbb396e8dcc0c0a0a94d5117855769",
+      "bytes": 1377998
+    },
+    "merged-prs.csv": {
+      "bytes": 660630,
+      "sha256": "89ad91d57b580e74361b96c8440e5418dc9bc6291a82edeb5b4575ec55e0837a"
+    },
+    "merged-prs.md": {
+      "sha256": "515a232978576348c10d7a61aebe5fc7c56056f8a9bc0cd464b9b505053cb29f",
+      "bytes": 664891
+    },
+    "README.md": {
+      "sha256": "1ffd233894a7437f847c7988de39a5a31007711af9d76b85bec51d0acc9eed9d",
+      "bytes": 763
+    }
+  }
+}
