@@ -79,3 +79,72 @@ cd docs && python3 -m http.server 8471
 across every clone in `~/dev`). `python3 scripts/regen.py` refreshes both
 data files; `commits` expects the harvested list at
 `/tmp/commits_dev.json`.
+
+## Final merged-work archive
+
+The November 5 close-out in `epilogue` has a separate GitHub inventory.
+It searches merged PRs without requiring a Devin credit in the PR body,
+then checks PR commits, merge commits, and local Git history for agent
+credits. The window is October 1 through November 5, 2026, by **merge date**,
+not session date or PR creation date.
+
+The account scope is repositories owned by `drawmeanelephant`, plus PRs
+authored by that account elsewhere. A marker records provenance evidence,
+not sole authorship or correctness. Direct pushes are not counted as PRs.
+
+Public receipts live in `docs/assets/closeout-2026-11-05/`:
+
+- `merged-prs.md`: the readable inventory.
+- `merged-prs.csv`: spreadsheet export.
+- `merged-prs.json`: titles, URLs, merge dates, merge SHAs, constituent
+  commit SHAs, diff counts, and agent evidence.
+- `local-commits.json`: Devin-marked local commits and default-branch
+  reachability, without fetching refs.
+- `manifest.json`: capture scope, totals, and SHA-256 checksums.
+- `README.md`: what the export preserves and what it does not.
+
+The hand-selected examples in `data/closeout-highlights.md` summarize PR
+titles. The generator keeps the complete receipt inventory below them.
+
+Private-repository receipts stay outside this repository, in
+`~/Documents/devin-closeout-2026-11-05/`. That directory also preserves the
+original report's JSON files. It has mode `0700`; receipt files have mode
+`0600`. Neither location is inside Devin's application data.
+
+The completed capture also has an offline copy of the rendered site in
+`site/` inside the private backup. `site-manifest.json` records a checksum
+for every copied file. That copy is a finalization step, not part of running
+the harvester.
+
+These exports **do not back up chat transcripts, uncommitted work, or Git
+objects**. Keep the private backup and this repository when uninstalling
+Devin. If you need transcripts too, preserve the application data separately
+before deleting it.
+
+To harvest, use authenticated, read-only GitHub access through `gh`:
+
+```
+python3 -B scripts/harvest_closeout.py
+./build.sh
+```
+
+The harvester checkpoints sanitized pages in the private backup so an
+interrupted capture can resume. It rejects truncated searches, missing
+commit pages, and counts that disagree with REST search. Use a new
+`--private-dir` for a fresh capture rather than reusing an old page cache.
+No PR descriptions, full commit messages, or email addresses are exported.
+
+To rebuild the end cap from the preserved receipts without GitHub:
+
+```
+python3 -B scripts/harvest_closeout.py --render-only
+./build.sh
+```
+
+To check the receipts, rendered pages, and local links:
+
+```
+python3 -B -m unittest discover -s scripts -p 'test_harvest_closeout.py' -v
+python3 -B scripts/check_archive.py
+python3 -B scripts/check_archive.py --private-dir "$HOME/Documents/devin-closeout-2026-11-05"
+```
